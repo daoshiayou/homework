@@ -91,6 +91,7 @@ bool search(BinaryTree<T> *tree, const T &key)
 	return (search(new BinaryTree<T>(root->leftChild()), key) || search(new BinaryTree<T>(root->rightChild()), key)) == true;
 }
 
+
 int main()
 {
 	BinaryTreeNode<int> *root = new BinaryTreeNode<int>(0, new BinaryTreeNode<int>(1, new BinaryTreeNode<int>(3), new BinaryTreeNode<int>(4)), new BinaryTreeNode<int>(2, NULL, new BinaryTreeNode<int>(5, new BinaryTreeNode<int>(6), NULL)));
