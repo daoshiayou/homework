@@ -11,13 +11,13 @@ class BinaryTreeNode
 {
 	friend class BinaryTree<T>;
 
-private:
+  private:
 	T info;
 	BinaryTreeNode<T> *lChild;
 	BinaryTreeNode<T> *rChild;
 
-public:
-	BinaryTreeNode() : lChild(NULL), rChild(NULL) {};
+  public:
+	BinaryTreeNode() : lChild(NULL), rChild(NULL){};
 	BinaryTreeNode(const T ele) : info(ele), lChild(NULL), rChild(NULL) {}
 	BinaryTreeNode(const T ele, BinaryTreeNode<T> *l, BinaryTreeNode<T> *r) : info(ele), lChild(l), rChild(r) {}
 
@@ -44,10 +44,10 @@ public:
 template <class T>
 class BinaryTree
 {
-private:
+  private:
 	BinaryTreeNode<T> *root;
 
-public:
+  public:
 	BinaryTree() { root = NULL; }
 	BinaryTree(BinaryTreeNode<T> *node)
 	{
@@ -77,20 +77,18 @@ int heightOfTree(BinaryTreeNode<T> *root)
 
 //递归search
 template <class T>
-bool search(BinaryTree<T> *tree, const T &key)
+bool search(BinaryTreeNode<T> *root, const T &key)
 {
-	BinaryTreeNode<T> *root = tree->Root();
-	if (root==NULL)
+	if (root != NULL)
 	{
-		return false;
+		if (root->value() == key)
+		{
+			return true;
+		}
+		return search(root->leftChild()) || search(root->rightChild());
 	}
-	if (root->value() == key)
-	{
-		return true;
-	}
-	return (search(new BinaryTree<T>(root->leftChild()), key) || search(new BinaryTree<T>(root->rightChild()), key)) == true;
+	return false;
 }
-
 
 int main()
 {
