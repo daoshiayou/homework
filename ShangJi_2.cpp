@@ -93,7 +93,7 @@ string infixToP(const string &infix)
     {
         fixch = infix[i];
         stack.top(ch);
-        if ((fixch >= 48 && fixch <= 57) || fixch == ' ')
+        if ((fixch >= 48 && fixch <= 57) || fixch == '.' || fixch == ' ')
         {
             postfix += fixch;
         }
