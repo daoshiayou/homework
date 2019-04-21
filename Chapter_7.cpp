@@ -11,23 +11,17 @@
  *      划掉2、定义一个顶点结点（把十年前的代码copy过来改一改）划掉
  *      3、定义一个带着顶点结点头其他都是边结点的链表
  *      4、定义一个带构造函数的邻接表
- *      5、为了兼容无向图干脆定义个成员变量得了
  * 
  *  二、实现边的插入
  *      1、返回值：布尔     参数：起点、终点、权值
  *     X2、找到起点遍历查找应该插入边的位置，判断边是否存在(遍历的时候注意避免空指针异常)
- *         存在：修改权值,判断是否是无向图
- *              是：重复一遍
- *              不是：返回
+ *         存在：修改权值
  *         不存在：进行链表结点插入
- *      2、套个for循环有向图执行一次无向图执行两次
  * 
  *  三、实现边的删除
  *      1、返回值：布尔     参数：起点、终点
  *      2、找到起点遍历查找删除的边，判断边是否存在
- *         存在：删除,判断是否是无向图
- *              是：重复一遍
- *              不是：返回
+ *         存在：删除
  *         不存在：返回
  */
 
@@ -84,10 +78,9 @@ class graph
 {
 private:
     list<T, W> *graList = NULL;
-    const bool isUndigraph;
 
 public:
-    graph(T *v, const int &num, const bool &isUndi) : isUndigraph(isUndi) //根据数组初始化顶点数组
+    graph(T *v, const int &num)  //根据数组初始化顶点数组
     {
         this->graList = new list<T, W>[num];
         for (int i = 0; i < num; i++)
@@ -98,44 +91,33 @@ public:
     //有向图和无向图一起太难了吧！！！！！！！！！！！！！！！！！！！要比上机写得都多了？？？？？？？？？？？？？？
     bool insertEdge(int from, int to, W weight)
     {
-        const times = isUndigraph ? 2 : 1;
         int f = from, t = to;
-        for (int i = 0; i < times; i++)
+        eLink<W> *point = graList[f]->next;
+        //如果该结点没有边，创建
+        if (point == NULL)
         {
-            eLink<W> *point = graList[f]->next;
-            if (point == NULL)
-            {
-                graList[f]->next = new eLink<W>(new edge<W>(t, weight), NULL);
-                f = to;
-                t = from;
-                continue;
-            }
-            while (point->next != NULL && point->next->data->vertex < t)
-            {
-                point = point->next;
-            }
-            if (point->next == NULL)
-            {
-                point->next = new eLink<W>(new edge<W>(t, weight), NULL);
-                f = to;
-                t = from;
-                continue;
-            }
-            else if (point->next->data->vertex == t)
-            {
-                cout << "The edge already exists" << endl;
-                point->next->data->weight = weight;
-                f = to;
-                t = from;
-                continue;
-            }
-            else
-            {
-                point->next = new eLink<W>(new edge<W>(t, weight), point->next);
-                f = to;
-                t = from;
-                continue;
-            }
+            graList[f]->next = new eLink<W>(new edge<W>(t, weight), NULL);
+        }
+        //有，定位边的位置
+        while (point->next != NULL && point->next->data->vertex < t)
+        {
+            point = point->next;
+        }
+        //没找到边，在尾巴加上
+        if (point->next == NULL)
+        {
+            point->next = new eLink<W>(new edge<W>(t, weight), NULL);
+        }
+        //边存在，修改权值
+        else if (point->next->data->vertex == t)
+        {
+            cout << "The edge already exists" << endl;
+            point->next->data->weight = weight;
+        }
+        //边的插入
+        else
+        {
+            point->next = new eLink<W>(new edge<W>(t, weight), point->next);
         }
         return true;
     }
@@ -149,43 +131,36 @@ public:
     bool deleteEdge(int from, int to)
     {
         eLink<W> *point = graList[from]->next;
+        //如果该结点无边，返回
         if (point == NULL)
         {
             cout << "The edge does not exist" << endl;
             return false;
         }
+        //如果有，定位边的位置
         while (point->next != NULL && point->next->data->vertex < to)
         {
             point = point->next;
         }
+        //如果无边，返回
         if (point->next == NULL)
         {
             cout << "The edge does not exist" << endl;
             return false;
         }
+        //如果无边，返回
         else if (point->next->data->vertex > to)
         {
             cout << "The edge does not exist" << endl;
             return false;
         }
+        //找到边，删除
         else
         {
             eLink<W> *temp = point->next;
             point->next = temp->next;
             delete temp;
-            if (isUndigraph)
-            {
-                point = graList[to]->next;
-                while (point->next != NULL && point->next->data->vertex < from)
-                {
-                    point = point->next;
-                }
-                temp = point->next;
-                point->next = temp->next;
-            }
             return true;
         }
     }
 };
-
-//然后我觉得无限图的邻接表应该不是这种双箭头的表示方法肯定更简单你自己花一下午加一晚上钻什么牛角尖有这个时间还不如睡会觉先把作业交了之后再改好了
