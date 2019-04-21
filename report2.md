@@ -78,7 +78,7 @@ __ADT定义__：
 主程序流程：  
 提示用户输入->获取用户输入的中缀表达式->调用中缀表达式转换函数->显示转换后的后缀表达式->用转换后的后缀表达式调用后缀表达式求值函数->显示求值结果  
 调用关系：  
-![调用关系](source/2模块调用关系.png)
+![调用关系](https://github.com/daoshiayou/data-structures-and-algorithms-homework/blob/master/source/2模块调用关系.png)
 
 ## 详细设计
 
@@ -338,7 +338,7 @@ __ADT定义__：
 2. pos更新
 
 函数调用关系：  
-![函数调用关系](\source\2函数调用关系.png)
+![函数调用关系](https://github.com/daoshiayou/data-structures-and-algorithms-homework/blob/master/source/2函数调用关系.PNG)
 
 ## 调试分析
 
@@ -367,8 +367,8 @@ _空间复杂度_：O(n)
 
 ## 测试结果
 
-![输入](\source\2测试1.png)
-![输出](\source\2测试2.png)
+![输入](https://github.com/daoshiayou/data-structures-and-algorithms-homework/blob/master/source/2测试1.PNG)
+![输出](https://github.com/daoshiayou/data-structures-and-algorithms-homework/blob/master/source/2测试2.PNG)
 
 ## 源程序
 
