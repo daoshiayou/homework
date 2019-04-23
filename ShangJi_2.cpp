@@ -1,3 +1,11 @@
+/*
+题目：
+实现表达式求值算法，要求分2步实现。
+
+1.中缀表达式变换为后缀  
+2.后缀表达式求值  
+*/
+
 #include <iostream>
 #include <string>
 
@@ -217,7 +225,6 @@ double postfixCal(const string &postfix)
                     break;
                 case '/':
                     stack.push(op2 / op1);
-                    break;
                     break;
 
                 default:

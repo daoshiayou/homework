@@ -1,4 +1,3 @@
-
 #include <iostream>
 
 using namespace std;
@@ -94,5 +93,5 @@ int main()
 {
 	BinaryTreeNode<int> *root = new BinaryTreeNode<int>(0, new BinaryTreeNode<int>(1, new BinaryTreeNode<int>(3), new BinaryTreeNode<int>(4)), new BinaryTreeNode<int>(2, NULL, new BinaryTreeNode<int>(5, new BinaryTreeNode<int>(6), NULL)));
 	cout << heightOfTree(root) << endl;
-	cout << search(new BinaryTree<int>(root), 7) << endl;
+	cout << search(root, 7) << endl;
 }
