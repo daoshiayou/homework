@@ -7,11 +7,11 @@ using namespace std;
 template <class T>
 class Link
 {
-  private:
+private:
     T data;
     Link<T> *next;
 
-  public:
+public:
     Link(const T value = NULL, Link<T> *nextValue = NULL) : data(value), next(nextValue) {}
     void setData(const T value) { this->data = value; }
     void setNext(const Link<T> *nextP) { this->next = nextP; }
@@ -23,11 +23,11 @@ class Link
 template <class T>
 class Stack
 {
-  private:
+private:
     Link<T> *topE; //指向栈顶元素
     int size;      //栈中存放元素数量
 
-  public:
+public:
     Stack() : topE(NULL), size(0) {}
     void clear()
     {
@@ -93,7 +93,11 @@ string infixToP(const string &infix)
     {
         fixch = infix[i];
         stack.top(ch);
-        if ((fixch >= 48 && fixch <= 57) || fixch == '.' || fixch == ' ')
+        if (fixch == ' ')
+        {
+            continue;
+        }
+        else if ((fixch >= 48 && fixch <= 57) || fixch == '.')
         {
             postfix += fixch;
         }
@@ -247,7 +251,10 @@ int main()
     while (1)
     {
         cout << "请输入中缀表达式:" << endl;
-        cin >> infix;
+        // cin >> infix;
+        char buff[1024];
+        cin.getline(buff,100,'\n');
+        string infix(buff);
         string postfix = infixToP(infix);
         cout << "输出的后缀表达式为：" << endl;
         cout << postfix << endl;
