@@ -89,60 +89,6 @@ public:
     }
 };
 
-//自定义队列
-template <class T>
-class Queue
-{
-private:
-    int size;
-    Link<T> *front;
-    Link<T> *rear;
-
-public:
-    Queue() : size(0), front(NULL), rear(NULL) {}
-    bool isEmpty() { return size == 0; }
-    bool enQueue(const T item)
-    {
-        if (front == NULL)
-        {
-            front = rear = new Link<T>(item, NULL);
-        }
-        else
-        {
-            rear->setNext(new Link<T>(item, NULL));
-            rear = rear->getNext();
-        }
-        size++;
-        return true;
-    }
-    bool deQueue(T &item)
-    {
-        if (isEmpty())
-        {
-            cout << "队空，不能出队" << endl;
-            return false;
-        }
-        item = front->getData();
-        Link<T> temp = front;
-        front = front->getNext();
-        delete temp;
-        size--;
-        if (front == NULL || size == 0)
-            rear = NULL;
-        return true;
-    }
-    bool getFront(T &item)
-    {
-        if (isEmpty())
-        {
-            cout << "队空" << endl;
-            return false;
-        }
-        item = front->getData();
-        return true;
-    }
-};
-
 template <class T>
 class BinaryTree;
 
@@ -556,7 +502,7 @@ BinaryTree<string> expToTree(string expression)
             if ((expression[i - 1] >= 48 && expression[i - 1] <= 57) || (expression[i - 1] >= 65 && expression[i - 1] <= 90) || (expression[i - 1] >= 97 && expression[i - 1] <= 122))
             {
                 BinaryTreeNode<string> *node = new BinaryTreeNode<string>(expression.substr(pos, i - pos));
-                cout << expression.substr(pos, i - pos) << "入栈" << endl;
+                // cout << expression.substr(pos, i - pos) << "入栈" << endl;
                 operands.push(node);
                 pos = i + 1;
             }
@@ -619,6 +565,7 @@ void showBinaryTree(BinaryTreeNode<T> *root, int height)
     showBinaryTree(root->leftChild(), height + 1);
 }
 
+//二叉树转后缀表达式(后序周游)
 template <class T>
 struct stackEle
 {
@@ -626,7 +573,6 @@ struct stackEle
     bool tag; //true 从右子树返回  false 从左子树返回
 };
 
-//二叉树转后缀表达式(后序周游)
 template <class T>
 string treeToPostfix(BinaryTree<T> *tree)
 {
