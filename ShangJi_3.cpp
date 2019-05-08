@@ -627,7 +627,7 @@ int main()
         char choice;
         cin >> choice;
         cin.clear();
-        cin.sync();
+        cin.ignore(1024,'\n');
         BinaryTree<string> tree;
         switch (choice)
         {
@@ -636,8 +636,6 @@ int main()
             cout << "请输入中缀表达式:" << endl;
             char buff[1024];
             cin.getline(buff, 100, '\n');
-            cin.clear();
-            cin.sync();
             string infix(buff);
             string postfix = infixToPost(infix);
             tree = expToTree(postfix);
@@ -650,8 +648,6 @@ int main()
             cout << "请输入前缀表达式（请用空格分隔）:" << endl;
             char buff[1024];
             cin.getline(buff, 100, '\n');
-            cin.clear();
-            cin.sync();
             string prefix(buff);
             string postfix = infixToPost(prefixToIn(prefix));
             tree = expToTree(postfix);
@@ -664,8 +660,6 @@ int main()
             cout << "请输入后缀表达式（请用空格分隔）:" << endl;
             char buff[1024];
             cin.getline(buff, 100, '\n');
-            cin.clear();
-            cin.sync();
             string postfix(buff);
             tree = expToTree(postfix);
             cout << "转换后的二叉树如下：" << endl;
@@ -673,7 +667,7 @@ int main()
             break;
         }
         default:
-            return 0;
+            return -1;
         }
         while (1)
         {
@@ -684,7 +678,7 @@ int main()
             cout << "其他： 退回" << endl;
             cin >> choice;
             cin.clear();
-            cin.sync();
+            cin.ignore(1024,'\n');
             string postfix = treeToPostfix(&tree);
             switch (choice)
             {
