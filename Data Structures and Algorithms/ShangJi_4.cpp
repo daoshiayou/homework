@@ -19,7 +19,7 @@
  *          b. 重复c遍历所有顶点，结束后得到每对顶点最短路径
  *            （思维误区：计算中转点时取出的最短路径是最终的最短吗？如果不是如何保证是最短路径？
  *                       即，执行d[i][j]=min(d[i][j],d[i][k]+d[k][j])时，d[i][k]与d[k][j]是否都保证为最小值？
- *              找到的答案：对于所有的k,执行那个语句前d[i][k]和d[k][j]不一定都是最小值.但是存在一个k=x,在执行那个语句前d[i][x]和d[x][j]都是最小值.并且x是i和j最短路径的点集里最大的编号）https://blog.csdn.net/ljhandlwt/article/details/52096932
+ *              找到的答案：对于所有的k,执行那个语句前d[i][k]和d[k][j]不一定都是最小值.但是存在一个k=x,在执行那个语句前d[i][x]和d[x][j]都是最小值.并且x是i和j最短路径的点集里最大的编号）https://blog->csdn.net/ljhandlwt/article/details/52096932
  *             妙啊:open_mouth:
  *     （3）最小生成树：prim算法（在Dijkstra里加一步就是了，还可以调用Dijkstra后用得到的最短路径直接生成吧）
  *          需要用户输入源点
@@ -318,12 +318,12 @@ ostream &operator<<(ostream &o, const Dist &d)
     return o;
 }
 
-Dist *Dijkstra(const Graph g, int s)
+Dist *Dijkstra(const Graph *g, int s)
 {
-    Dist *path = new Dist[g.getNumVertex()];
-    bool *mark = g.getMark();
+    Dist *path = new Dist[g->getNumVertex()];
+    bool *mark = g->getMark();
     //initializes path information and visited tag
-    for (int i = 0; i < g.getNumVertex(); i++)
+    for (int i = 0; i < g->getNumVertex(); i++)
     {
         path[i].index = i;
         path[i].length = INFINITY;
@@ -331,7 +331,7 @@ Dist *Dijkstra(const Graph g, int s)
         mark[i] = false;
     }
     path[s].length = 0;
-    MinHeap<Dist> heap(g.getNumEdge());
+    MinHeap<Dist> heap(g->getNumEdge());
     heap.insert(path[s]);
     Dist temp;
     //main algorithm
@@ -341,9 +341,7 @@ Dist *Dijkstra(const Graph g, int s)
         if (mark[temp.index] == false)
         {
             mark[temp.index] = true;
-            //todo: the program stoped here
-            cout << "I'm running" << temp << g.firstEdge(temp.index) << endl;
-            for (Edge e = g.firstEdge(temp.index); g.isEdge(e); e = g.nextEdge(e))
+            for (Edge e = g->firstEdge(temp.index); g->isEdge(e); e = g->nextEdge(e))
             {
                 if (path[e.to].length > path[e.from].length + e.weight)
                 {
@@ -357,17 +355,17 @@ Dist *Dijkstra(const Graph g, int s)
     return path;
 }
 
-Dist **Floyd(const Graph g)
+Dist **Floyd(const Graph *g)
 {
-    Dist **path = new Dist *[g.getNumVertex()];
+    Dist **path = new Dist *[g->getNumVertex()];
     //initializes path information and visited tag
-    for (int i = 0; i < g.getNumVertex(); i++)
+    for (int i = 0; i < g->getNumVertex(); i++)
     {
-        path[i] = new Dist[g.getNumVertex()];
+        path[i] = new Dist[g->getNumVertex()];
     }
-    for (int i = 0; i < g.getNumVertex(); i++)
+    for (int i = 0; i < g->getNumVertex(); i++)
     {
-        for (int j = 0; j < g.getNumVertex(); j++)
+        for (int j = 0; j < g->getNumVertex(); j++)
         {
             if (i == j)
             {
@@ -376,18 +374,18 @@ Dist **Floyd(const Graph g)
             }
             else
             {
-                path[i][j].length = g[i][j];
-                path[i][j].pre = g[i][j] == INFINITY ? -1 : i;
+                path[i][j].length = (*g)[i][j];
+                path[i][j].pre = (*g)[i][j] == INFINITY ? -1 : i;
             }
             path[i][j].index = i;
         }
     }
     //main algorithm
-    for (int k = 0; k < g.getNumVertex(); k++)
+    for (int k = 0; k < g->getNumVertex(); k++)
     {
-        for (int i = 0; i < g.getNumVertex(); i++)
+        for (int i = 0; i < g->getNumVertex(); i++)
         {
-            for (int j = 0; j < g.getNumVertex(); j++)
+            for (int j = 0; j < g->getNumVertex(); j++)
             {
                 if (path[i][k].length == INFINITY || path[k][j].length == INFINITY)
                     continue;
@@ -402,14 +400,14 @@ Dist **Floyd(const Graph g)
     return path;
 }
 
-Edge *Prim(const Graph g, int s)
+Edge *Prim(const Graph *g, int s)
 {
-    Dist *path = new Dist[g.getNumVertex()];
-    bool *mark = g.getMark();
-    Edge *tree = new Edge[g.getNumVertex() - 1];
+    Dist *path = new Dist[g->getNumVertex()];
+    bool *mark = g->getMark();
+    Edge *tree = new Edge[g->getNumVertex() - 1];
     int index = 0;
     //initializes path information and visited tag
-    for (int i = 0; i < g.getNumVertex(); i++)
+    for (int i = 0; i < g->getNumVertex(); i++)
     {
         path[i].index = i;
         path[i].length = INFINITY;
@@ -417,8 +415,8 @@ Edge *Prim(const Graph g, int s)
         mark[i] = false;
     }
     path[s].length = 0;
-    MinHeap<Dist> heap(g.getNumVertex());
-    for (Edge e = g.firstEdge(s); g.isEdge(e); e = g.nextEdge(e))
+    MinHeap<Dist> heap(g->getNumVertex());
+    for (Edge e = g->firstEdge(s); g->isEdge(e); e = g->nextEdge(e))
     {
         if (path[e.to].length > path[e.from].length + e.weight)
         {
@@ -435,8 +433,8 @@ Edge *Prim(const Graph g, int s)
         if (mark[temp.index] == false)
         {
             mark[temp.index] = true;
-            tree[index++] = Edge(temp.pre, temp.index, /*path[temp.index].length - path[temp.pre].index*/ g[temp.pre][temp.index]);
-            for (Edge e = g.firstEdge(temp.index); g.isEdge(e); e = g.nextEdge(e))
+            tree[index++] = Edge(temp.pre, temp.index, /*path[temp.index].length - path[temp.pre].index*/ (*g)[temp.pre][temp.index]);
+            for (Edge e = g->firstEdge(temp.index); g->isEdge(e); e = g->nextEdge(e))
             {
                 if (path[e.to].length > path[e.from].length + e.weight)
                 {
@@ -453,27 +451,27 @@ Edge *Prim(const Graph g, int s)
 
 int main()
 {
-    Graph g(8);
-    g.setEdge(0, 1, 4);
-    g.setEdge(0, 2, 3);
-    g.setEdge(3, 0, 4);
-    g.setEdge(1, 2, 5);
-    g.setEdge(1, 3, 2);
-    g.setEdge(4, 1, 6);
-    g.setEdge(2, 3, 5);
-    g.setEdge(2, 7, 10);
-    g.setEdge(3, 4, 5);
-    g.setEdge(3, 5, 7);
-    g.setEdge(3, 6, 9);
-    g.setEdge(3, 7, 8);
-    g.setEdge(3, 7, 8);
-    g.setEdge(6, 4, 5);
-    g.setEdge(5, 6, 2);
-    g.setEdge(5, 7, 6);
-    g.setEdge(7, 6, 7);
+    Graph *g = new Graph(8);
+    g->setEdge(0, 1, 4);
+    g->setEdge(0, 2, 3);
+    g->setEdge(3, 0, 4);
+    g->setEdge(1, 2, 5);
+    g->setEdge(1, 3, 2);
+    g->setEdge(4, 1, 6);
+    g->setEdge(2, 3, 5);
+    g->setEdge(2, 7, 10);
+    g->setEdge(3, 4, 5);
+    g->setEdge(3, 5, 7);
+    g->setEdge(3, 6, 9);
+    g->setEdge(3, 7, 8);
+    g->setEdge(3, 7, 8);
+    g->setEdge(6, 4, 5);
+    g->setEdge(5, 6, 2);
+    g->setEdge(5, 7, 6);
+    g->setEdge(7, 6, 7);
     while (1)
     {
-        cout << "Please enter key to choose the algorithm:" << endl;
+        cout << "Enter key to choose the algorithm:" << endl;
         cout << "1: Dijkstra" << endl;
         cout << "2: Floyd" << endl;
         cout << "3: Prim" << endl;
@@ -491,8 +489,15 @@ int main()
             cin >> source;
             cin.clear();
             cin.ignore(1024, '\n');
+            if (source >= g->getNumVertex())
+            {
+                cout << "The graph has only " << g->getNumVertex() << " vertices,Please enter a correct index" << endl;
+                break;
+            }
+            cout << "The shortest path from source vertex " << source << " to others:" << endl;
+            ;
             Dist *d = Dijkstra(g, source);
-            for (int i = 0; i < g.getNumVertex(); i++)
+            for (int i = 0; i < g->getNumVertex(); i++)
             {
                 cout << d[i] << endl;
             }
@@ -502,9 +507,11 @@ int main()
         case '2':
         {
             Dist **d = Floyd(g);
-            for (int i = 0; i < g.getNumVertex(); i++)
+            cout << "The Floyd algorithm's data:" << endl;
+            ;
+            for (int i = 0; i < g->getNumVertex(); i++)
             {
-                for (int j = 0; j < g.getNumVertex(); j++)
+                for (int j = 0; j < g->getNumVertex(); j++)
                 {
                     cout << d[i][j] << " " << endl;
                 }
@@ -521,8 +528,15 @@ int main()
             cin >> source;
             cin.clear();
             cin.ignore(1024, '\n');
+            if (source >= g->getNumVertex())
+            {
+                cout << "The graph has only " << g->getNumVertex() << " vertices,Please enter a correct index" << endl;
+                break;
+            }
+            cout << "The minimum spanning tree's edges obtained from the source vertex " << source << " are:" << endl;
+            ;
             Edge *edges = Prim(g, source);
-            for (int i = 0; i < g.getNumVertex() - 1; i++)
+            for (int i = 0; i < g->getNumVertex() - 1; i++)
             {
                 cout << edges[i] << endl;
             }
