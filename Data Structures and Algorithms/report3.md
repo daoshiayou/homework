@@ -191,7 +191,7 @@ __ADT定义__：
 主程序流程：  
 提示用户输入->获取用户输入的选项->获取用户输入的表达式->调用对应转换函数将表达式转换为后缀表达式->用后缀表达式构造表达式二叉树->显示构造好的表达式二叉树->获取用户输入的选项->调用对应转换函数将转换好的后缀表达式转换为对应表达式->输出转换后的对应表达式  
 调用关系：  
-![调用关系](https://github.com/daoshiayou/data-structures-and-algorithms-homework/blob/master/source/3模块调用关系.PNG)
+![调用关系](https://github.com/daoshiayou/homework/blob/master/Data%20Structures%20and%20Algorithms/source/3模块调用关系.PNG)
 
 ## 详细设计
 
@@ -882,7 +882,7 @@ __ADT定义__：
 5. 输出后缀表达式
 
 函数调用关系：  
-![函数调用关系](https://github.com/daoshiayou/data-structures-and-algorithms-homework/blob/master/source/3函数调用关系.PNG)
+![函数调用关系](https://github.com/daoshiayou/homework/blob/master/Data%20Structures%20and%20Algorithms/source/3函数调用关系.PNG)
 
 ## 调试分析
 
@@ -927,10 +927,10 @@ _空间复杂度_：O(n)
 
 ## 测试结果
 
-![输入1](https://github.com/daoshiayou/data-structures-and-algorithms-homework/blob/master/source/3测试1.PNG)
-![输出1](https://github.com/daoshiayou/data-structures-and-algorithms-homework/blob/master/source/3测试2.PNG)  
-![输入2](https://github.com/daoshiayou/data-structures-and-algorithms-homework/blob/master/source/3测试3.PNG)
-![输出2](https://github.com/daoshiayou/data-structures-and-algorithms-homework/blob/master/source/3测试4.PNG)
+![输入1](https://github.com/daoshiayou/homework/blob/master/Data%20Structures%20and%20Algorithms/source/3测试1.PNG)
+![输出1](https://github.com/daoshiayou/homework/blob/master/Data%20Structures%20and%20Algorithms/source/3测试2.PNG)  
+![输入2](https://github.com/daoshiayou/homework/blob/master/Data%20Structures%20and%20Algorithms/source/3测试3.PNG)
+![输出2](https://github.com/daoshiayou/homework/blob/master/Data%20Structures%20and%20Algorithms/source/3测试4.PNG)
 
 ## 源程序
 
