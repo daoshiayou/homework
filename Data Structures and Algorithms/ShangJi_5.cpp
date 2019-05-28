@@ -22,7 +22,7 @@
 
 using namespace std;
 
-const int NUM = 10000000;
+const int NUM = 600000;
 
 //Heap
 template <class T>
@@ -226,7 +226,7 @@ int main()
         array2[i] = array1[i];
         array3[i] = array1[i];
     }
-    cout << endl;
+    // cout << endl;
     clock_t begin, end;
     begin = clock();
     quicksort<double>(array1, 0, NUM - 1);
@@ -240,4 +240,5 @@ int main()
     mergesort<double>(array3, new double[NUM], 0, NUM - 1);
     end = clock();
     cout << "mergesort spend " << double(end - begin) / CLK_TCK << " ms" << endl;
+    system("pause");
 }
